@@ -3,8 +3,11 @@
 pragma solidity ^0.6.0;
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.0-beta.0/contracts/ownership/Ownable.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.0-beta.0/contracts/math/SafeMath.sol";
 
 contract Allowance is Ownable {
+    using SafeMath for uint256;
+
     event AllowanceChanged(
         address indexed _forWho,
         address indexed _fromWho,
@@ -31,9 +34,9 @@ contract Allowance is Ownable {
             _who,
             msg.sender,
             allowance[_who],
-            allowance[_who] - _amount
+            allowance[_who].sub(_amount)
         );
-        allowance[_who] -= _amount;
+        allowance[_who] = allowance[_who].sub(_amount);
     }
 }
 
