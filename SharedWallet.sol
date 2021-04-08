@@ -4,7 +4,7 @@ pragma solidity ^0.6.0;
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.0-beta.0/contracts/ownership/Ownable.sol";
 
-contract SimpleWallet is Ownable {
+contract Allowance is Ownable {
     mapping(address => uint256) public allowance;
 
     function addAllowance(address _who, uint256 _amount) public onlyOwner {
@@ -22,7 +22,9 @@ contract SimpleWallet is Ownable {
     function reduceAllowance(address _who, uint256 _amount) internal {
         allowance[_who] -= _amount;
     }
+}
 
+contract SimpleWallet is Allowance {
     function withdrawMoney(address payable _to, uint256 _amount)
         public
         ownerOrAllowed(_amount)
